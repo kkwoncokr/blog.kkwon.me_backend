@@ -10,7 +10,7 @@ const posts = [
 
 // 포스트 작성
 // POST /api/posts
-exports.write = ctx => {
+export const write = ctx => {
     const {title,body} = ctx.request.body;
     postId += 1;
     const post = {id:postId, title, body};
@@ -20,14 +20,14 @@ exports.write = ctx => {
 //포스트 조회
 //GET /api/posts
 
-exports.list = ctx => {
+export const list = ctx => {
     ctx.body = posts;
 }
 
 // 특정 포스트 조회
 // GET /api/posts/:id
 
-exports.read = ctx => {
+export const read = ctx => {
     const {id} = ctx.params;
     const post = posts.find(p => p.id.toString() === id);
 
@@ -42,7 +42,7 @@ ctx.body=post;
 /* 특정 포스트 제거
 DELETE /api/posts/:id
 */
-exports.remove = ctx => {
+export const remove = ctx => {
     const { id } = ctx.params;
     // 해당 id를 가진 post가 몇 번째인지 확인합니다.
     const index = posts.findIndex(p => p.id.toString() === id);
@@ -65,7 +65,7 @@ exports.remove = ctx => {
   PUT /api/posts/:id
   { title, body }
   */
-  exports.replace = ctx => {
+  export const replace = ctx => {
     // PUT 메서드는 전체 포스트 정보를 입력하여 데이터를 통째로 교체할 때 사용합니다.
     const { id } = ctx.params;
     // 해당 id를 가진 post가 몇 번째인지 확인합니다.
@@ -93,7 +93,7 @@ exports.remove = ctx => {
   PATCH /api/posts/:id
   { title, body }
   */
-  exports.update = ctx => {
+  export const update = ctx => {
     // PATCH 메서드는 주어진 필드만 교체합니다.
     const { id } = ctx.params;
     // 해당 id를 가진 post가 몇 번째인지 확인합니다.
