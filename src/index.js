@@ -8,13 +8,14 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import api from './api/index.js';
+import createFakeData from './createFakeData.js'
 
 const {PORT,MONGO_URI} = process.env;
 
 mongoose
   .connect(MONGO_URI, {useNewUrlParser:true, useFindAndModify:false})
   .then(()=> {
-    console.log('디비 연동 성공!')
+    console.log('디비 연동 성공!');
   })
   .catch(e => {
     console.error(e);
