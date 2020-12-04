@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import api from './api/index.js';
-import createFakeData from './createFakeData.js'
+import jwtMiddleware from './lib/jwtMiddleware.js'
 
 const {PORT,MONGO_URI} = process.env;
 
@@ -29,6 +29,7 @@ const router = new Router();
 router.use('/api', api.routes());
 
 app.use(bodyParser());
+app.use(jwtMiddleware);
 app.use(router.routes()).use(router.allowedMethods());
 
 const port = PORT || 4000;
