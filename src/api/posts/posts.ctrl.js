@@ -57,7 +57,7 @@ export const write = async ctx => {
   });
   try {
     await post.save();
-    ctx.body = post.save();
+    ctx.body = post;
   } catch (e) {
     ctx.throw(500,e);
   }
