@@ -6,6 +6,7 @@ const { Schema } = mongoose;
 
 const UserSchema = new Schema({
   username: String,
+  nickname: String,
   hashedPassword: String,
 });
 
@@ -22,6 +23,9 @@ UserSchema.methods.checkPassword = async function(password) {
 UserSchema.statics.findByUsername = function(username) {
   return this.findOne({ username });
 };
+UserSchema.statics.findByNickname = function(nickname) {
+  return this.findOne({ nickname });
+};
 
 UserSchema.methods.serialize = function() {
     const data = this.toJSON();
@@ -33,6 +37,7 @@ UserSchema.methods.generateToken = function() {
         {
             _id: this.id,
             username: this.username,
+            nickname: this.nickname,
         },
         process.env.JWT_SECRET,
         {

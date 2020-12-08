@@ -4,31 +4,36 @@ import User from '../../models/user.js';
 export const register = async ctx => {
   // 회원가입
   const schema = Joi.object().keys({
-    username: Joi.string()
-      .alphanum()
-      .min(3)
-      .max(20)
-      .required(),
-    password: Joi.string().required(),
+    username: Joi.string().required()
+    .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+    nickname: Joi.string().required(),
+    password: Joi.string()
+    .alphanum()
+    .min(3)
+    .max(20)
+    .required(),
   });
   const result = schema.validate(ctx.request.body);
   if (result.error) {
     ctx.status = 400;
-    ctx.body = result.error;
+    ctx.body = JSON.stringify(result.error);
     return;
   }
 
-  const { username, password } = ctx.request.body;
+  const { username, nickname, password } = ctx.request.body;
   try {
-    // username  이 이미 존재하는지 확인
+    // username,nickname  이 이미 존재하는지 확인
     const exists = await User.findByUsername(username);
-    if (exists) {
+    const existsN = await User.findByNickname(nickname);
+    if (exists || existsN) {
       ctx.status = 409; // Conflict
+      ctx.json = '이미 존재하는 아이디 및 닉네임 입니다.';
       return;
     }
 
     const user = new User({
       username,
+      nickname,
     });
     await user.setPassword(password); // 비밀번호 설정
     await user.save(); // 데이터베이스에 저장
@@ -75,6 +80,7 @@ export const login = async (ctx) => {
 export const check = async (ctx) => {
   // 로그인 상태 확인
   const { user } = ctx.state;
+  console.log(ctx)
   if(!user) {
       ctx.state = 401;
       return;

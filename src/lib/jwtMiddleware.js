@@ -9,6 +9,7 @@ const jwtMiddleware = async (ctx, next) => {
         ctx.state.user = {
             _id:decoded._id,
             username:decoded.username,
+            nickname:decoded.nickname,
         }
         // 토큰이 남은 유효 기간이 3.5일 미만이면 재발급
         const now = Math.floor(Date.now() / 1000);
