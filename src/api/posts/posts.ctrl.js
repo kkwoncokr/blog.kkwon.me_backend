@@ -23,7 +23,7 @@ const sanitizeOption = {
   ],
   allowedAttributes: {
     a: ['href', 'name', 'target'],
-    img: ['src'],
+    img: ["src"],
     li: ['class'],
   },
   allowedSchemes: ['data', 'http'],
@@ -76,7 +76,8 @@ export const write = async ctx => {
   const {title, body,tags} = ctx.request.body;
   const post = new Post({
     title,
-    body: sanitizeHtml(body, sanitizeOption),
+    body,
+    // body: sanitizeHtml(body, sanitizeOption),
     tags,
       user: ctx.state.user,
   });
@@ -167,7 +168,8 @@ export const update = async ctx => {
   }
   const nextData ={...ctx.request.body};
   if(nextData.body) {
-    nextData.body = sanitizeHtml(nextData.body);
+    nextData.body;
+    // nextData.body = sanitizeHtml(nextData.body);
   }
   try {
     const post = await Post.findByIdAndUpdate(id, nextData, {
