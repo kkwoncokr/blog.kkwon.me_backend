@@ -36,9 +36,18 @@ export const getPostById = async (ctx, next) => {
     return;
   }
   try {
-    const post = await Post.findById(id);
+    const thisPost = await Post.findById(id);
+    const nextPost = await Post.find({_id: {$gt:id}}).sort({_id:1}).limit(1);
+    const prevPost = await Post.find({_id: {$lt:id}}).sort({_id:-1}).limit(1);
+
+    const post = ({
+      thisPost,
+      prevPost,
+      nextPost,
+    })
+    console.debug(post)
     // 포스트가 존재하지 않을 때
-    if (!post) {
+    if (!thisPost) {
       ctx.status = 404; // Not Found
       return;
     }
@@ -51,7 +60,7 @@ export const getPostById = async (ctx, next) => {
 
 export const checkOwnPost = (ctx,next) => {
   const {user,post} =ctx.state;
-  if(post.user._id.toString() !== user._id) {
+  if(post.thisPost.user._id.toString() !== user._id) {
     ctx.status = 403;
     return;
   }
