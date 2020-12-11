@@ -32,7 +32,7 @@ app.use(bodyParser());
 app.use(jwtMiddleware);
 app.use(router.routes()).use(router.allowedMethods());
 
-const port = PORT || 4000;
+const port = PORT || 80;
 app.listen(port, () => {
   console.log('listening to port %d',port);
 });
