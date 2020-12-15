@@ -5,9 +5,6 @@ import bodyParser from 'koa-bodyparser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from '@koa/cors';
-// import fs from 'fs';
-// import http from 'http';
-// import https from 'https';
 
 dotenv.config();
 
@@ -30,7 +27,7 @@ const app = new Koa();
 const router = new Router();
 
 app.use(cors({
-  origin: 'http://blog.kkwon.me',
+  origin: 'https://blog.kkwon.me',
   credentials: true,
   exposeHeaders:'Last-page',
 }))
@@ -44,11 +41,3 @@ const port = PORT || 80;
 app.listen(port, () => {
   console.log('listening to port %d',port);
 });
-
-// const options = { // letsencrypt로 받은 인증서 경로를 입력
-//   ca: fs.readFileSync('/etc/letsencrypt/live/api.kkwon.me/fullchain.pem'),
-//   key: fs.readFileSync('/etc/letsencrypt/live/api.kkwon.me/privkey.pem'),
-//   cert: fs.readFileSync('/etc/letsencrypt/live/api.kkwon.me/cert.pem')
-//   };
-//   http.createServer(app).listen(3000);
-//   https.createServer(options, app).listen(443);
