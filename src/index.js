@@ -29,7 +29,7 @@ const router = new Router();
 app.use(cors({
   origin: 'http://kkwon.me',
   credentials: true,
-  exposeHeaders:'Last-page',
+  allowHeaders:'Last-page',
 }))
 router.use('/api', api.routes());
 
