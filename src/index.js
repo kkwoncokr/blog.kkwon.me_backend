@@ -50,5 +50,5 @@ const options = { // letsencrypt로 받은 인증서 경로를 입력
   key: fs.readFileSync('/etc/letsencrypt/live/api.kkwon.me/privkey.pem'),
   cert: fs.readFileSync('/etc/letsencrypt/live/api.kkwon.me/cert.pem')
   };
-  http.createServer(app).listen(80);
+  http.createServer(app).listen(3000);
   https.createServer(options, app).listen(443);
