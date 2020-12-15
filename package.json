@@ -23,7 +23,7 @@
     "nodemon": "^2.0.6"
   },
   "scripts": {
-    "start": "pm2 start node src",
+    "start": "pm2 start src/index.js",
     "start:dev": "nodemon --watch src/ src/index.js"
   },
   "type": "module"
