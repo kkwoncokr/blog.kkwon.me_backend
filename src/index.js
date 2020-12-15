@@ -27,7 +27,7 @@ const app = new Koa();
 const router = new Router();
 
 app.use(cors({
-  origin: 'https://www.kkwon.me',
+  origin: 'https://kkwon.me',
   credentials: true,
   exposeHeaders:'Last-page',
 }))
