@@ -5,6 +5,9 @@ import bodyParser from 'koa-bodyparser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from '@koa/cors';
+import fs from 'fs';
+import http from 'http';
+import https from 'https';
 
 dotenv.config();
 
@@ -37,7 +40,15 @@ app.use(bodyParser());
 app.use(jwtMiddleware);
 app.use(router.routes()).use(router.allowedMethods());
 
-const port = PORT || 80;
-app.listen(port, () => {
-  console.log('listening to port %d',port);
-});
+// const port = PORT || 80;
+// app.listen(port, () => {
+//   console.log('listening to port %d',port);
+// });
+
+const options = { // letsencrypt로 받은 인증서 경로를 입력
+  ca: fs.readFileSync('/etc/letsencrypt/live/api.kkwon.me/fullchain.pem'),
+  key: fs.readFileSync('/etc/letsencrypt/live/api.kkwon.me/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/api.kkwon.me/cert.pem')
+  };
+  http.createServer(app).listen(80);
+  https.createServer(options, app).listen(443);
