@@ -4,7 +4,7 @@ import Router from 'koa-router';
 import bodyParser from 'koa-bodyparser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import cors from 'cors';
+import cors from '@koa/cors';
 
 dotenv.config();
 
@@ -27,8 +27,9 @@ const app = new Koa();
 const router = new Router();
 
 app.use(cors({
-  origin: ['kkwon.co.kr','http://blog.kkwon.co.kr.s3-website.ap-northeast-2.amazonaws.com/'],
+  origin: 'http://kkwon.me',
   credentials: true,
+  exposeHeaders:'Last-page',
 }))
 router.use('/api', api.routes());
 
